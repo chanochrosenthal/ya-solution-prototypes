@@ -1,776 +1,478 @@
 /**
- * Lumana AI Page - Y&A Solution
- * Design: Dark theme, immersive hero, rich animations, glassmorphism cards
- * Sections: Hero, VIA-1 Tech, Platform, Capabilities, AI Features, Industries, Search, CTA
+ * DESIGN: Cyberpunk Terminal Aesthetic
+ * Deep space black + cyan accents + JetBrains Mono terminal font
+ * Clip-path angled cuts, scanlines, glitch effects, 3D tilt cards
+ * Scanner lines on images, scramble text, typewriter hero
  */
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import ParticleField from "@/components/ParticleField";
-import { useCountUp } from "@/hooks/useCountUp";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
-  ArrowRight,
-  Shield,
-  Cpu,
-  Cloud,
-  Eye,
-  Search,
-  Zap,
-  BarChart3,
-  Camera,
-  Lock,
-  GraduationCap,
-  Factory,
-  Building2,
-  ShoppingBag,
-  Heart,
-  Hotel,
-  ChevronRight,
-  Check,
-  Crosshair,
-  AlertTriangle,
-  HardHat,
-  PersonStanding,
-  Car,
-  UserX,
-  Users,
-  Wind,
+  Eye, Search, Zap, BarChart3, Shield, Lock, Users,
+  Crosshair, AlertTriangle, HardHat, Activity,
+  UserX, Car, UsersRound, Wind,
+  GraduationCap, Factory, Heart, ShoppingBag, Building2, Hotel,
+  Cpu, Cloud, Monitor, Camera, ChevronRight,
 } from "lucide-react";
 
-const IMAGES = {
-  hero: "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_hero_command_center-Cv2ArTrtGKeGMoxxSuEXKV.webp",
-  aiVision: "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_ai_vision-2W7KCNMV8C27wNi6kNqyxt.webp",
-  dashboard: "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_platform_dashboard-jgN3WMHXA8XTzZLRQgviPu.webp",
-  industries: "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_industries_grid-WwBesiXzz9TJytnFEV5hA2.webp",
-  search: "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_search_interface-ZSQTz7cKETqLNu2hxjoiEi.webp",
-};
+import ScrambleText from "@/components/cyber/ScrambleText";
+import TypeWriter from "@/components/cyber/TypeWriter";
+import GlitchText from "@/components/cyber/GlitchText";
+import ScannerLine from "@/components/cyber/ScannerLine";
+import SpotlightCard from "@/components/cyber/SpotlightCard";
+import DataParticles from "@/components/cyber/DataParticles";
+import RadarSweep from "@/components/cyber/RadarSweep";
+import RevealOnScroll from "@/components/cyber/RevealOnScroll";
+import { useCountUp } from "@/hooks/useCountUp";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  }),
-};
+const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/YA_concept1_geometric_monogram_21251de9.png";
+const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_hero_command_center-Cv2ArTrtGKeGMoxxSuEXKV.webp";
+const AI_VISION = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_ai_vision-2W7KCNMV8C27wNi6kNqyxt.webp";
+const DASHBOARD = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_platform_dashboard-jgN3WMHXA8XTzZLRQgviPu.webp";
+const INDUSTRIES_BG = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_industries_grid-WwBesiXzz9TJytnFEV5hA2.webp";
+const SEARCH_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_search_interface-ZSQTz7cKETqLNu2hxjoiEi.webp";
 
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
-const fadeChild = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
-
-// Counter component
-function Counter({ end, suffix = "", label }: { end: number; suffix?: string; label: string }) {
-  const { count, ref } = useCountUp(end, 2000);
+/* ── Stat counter ── */
+function StatBox({ end, suffix, label }: { end: number; suffix: string; label: string }) {
+  const { ref, count } = useCountUp(end, 2000);
   return (
-    <div className="text-center" ref={ref as React.RefObject<HTMLDivElement>}>
-      <div className="text-4xl md:text-5xl font-bold text-[#2563EB] glow-text-blue" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+    <div className="relative pl-4" style={{ borderLeft: "2px solid rgba(6,182,212,0.3)" }}>
+      <div ref={ref} className="text-white font-bold" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", textShadow: "0 0 15px rgba(255,255,255,0.3)" }}>
         {count}{suffix}
       </div>
-      <div className="mt-2 text-xs font-medium tracking-[0.15em] text-white/40 uppercase">{label}</div>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#06b6d4", opacity: 0.8, marginTop: "4px" }}>
+        {label}
+      </div>
     </div>
   );
 }
 
+/* ── Section label ── */
+function SysLabel({ text }: { text: string }) {
+  return (
+    <ScrambleText
+      text={text}
+      className="block mb-4"
+      as="div"
+    />
+  );
+}
+
+/* ── Data ── */
+const capData = [
+  { icon: Eye, title: "Monitor_", subtitle: "Automate Surveillance", desc: "Eliminate monitoring fatigue with AI that never sleeps. Receive real-time alerts for specific activities — from unauthorized access to safety violations. Your cameras become proactive sentinels, not passive recorders.", features: ["Real-time threat alerts", "Eliminate monitoring fatigue", "Custom activity detection", "24/7 automated surveillance"] },
+  { icon: Search, title: "Investigate_", subtitle: "Accelerate Discovery", desc: "Find precise footage in seconds, not hours. Use natural language search to query your entire camera network. Type \"person in red jacket near entrance\" and instantly get results across all nodes.", features: ["Natural language search", "Cross-camera tracking", "Smart multi-parameter search", "Seconds instead of hours"] },
+  { icon: Zap, title: "Respond_", subtitle: "Streamline Actions", desc: "Respond as incidents unfold with automatic deterrence and active response capabilities. Trigger loudspeakers, initiate lockdowns, and dispatch emergency services — all from a single terminal.", features: ["Automatic alert verification", "Emergency dispatch", "Loudspeaker triggers", "Lockdown initiation"] },
+  { icon: BarChart3, title: "Insight_", subtitle: "Generate Intelligence", desc: "Turn raw video data into actionable business intelligence. Visualize trends, identify behavioral patterns, and solve operational bottlenecks before they escalate.", features: ["Real-time analytics", "Trend visualization", "Predictive insights", "Operational optimization"] },
+];
+
+const aiDetections = [
+  { icon: Crosshair, title: "Weapon Detect", desc: "Real-time firearm identification and automated lockdown alerts." },
+  { icon: AlertTriangle, title: "Violence Detect", desc: "Aggression behavioral modeling and physical altercation flags." },
+  { icon: HardHat, title: "PPE Compliance", desc: "Automated safety gear auditing on facility floors." },
+  { icon: Activity, title: "Slip & Fall", desc: "Kinematic tracking for immediate medical dispatch." },
+  { icon: UserX, title: "Unknown Vector", desc: "Identify unauthorized entities in restricted zones." },
+  { icon: Car, title: "ALPR System", desc: "Automated License Plate Recognition logging." },
+  { icon: UsersRound, title: "Max Occupancy", desc: "Real-time spatial density and capacity limits." },
+  { icon: Wind, title: "Vapor Detect", desc: "Identify smoke or vapor plumes in restricted airspace." },
+];
+
+const industries = [
+  { icon: GraduationCap, title: "Education", desc: "Campus security with gun detection and real-time threat response protocols." },
+  { icon: Factory, title: "Manufacturing", desc: "Worker safety metrics, PPE compliance, and production floor efficiency." },
+  { icon: Heart, title: "Healthcare", desc: "Patient kinematic tracking, fall detection, and restricted pharmacy access." },
+  { icon: ShoppingBag, title: "Retail", desc: "Loss prevention algorithms, footfall analytics, and queue monitoring." },
+  { icon: Building2, title: "Government", desc: "Public infrastructure safeguarding and authorized clearance tracking." },
+  { icon: Hotel, title: "Hospitality", desc: "Guest liability protection and multi-site perimeter surveillance." },
+];
+
+const pillars = [
+  { icon: Cpu, num: "01", title: "Core Edge", desc: "AI engine and video processor. Real-time processing using enterprise-grade GPUs with local AI for zero-latency heavy workloads." },
+  { icon: Cloud, num: "02", title: "Cloud Sync", desc: "Hybrid-cloud architecture. Most processing runs locally while the cloud adds remote access and seamless global model updates." },
+  { icon: Monitor, num: "03", title: "VMS+ Terminal", desc: "AI-driven control center accessible from any browser. Centralized management with unlimited cameras and infinite cloud archiving." },
+  { icon: Camera, num: "04", title: "Camera Nodes", desc: "Agnostic hardware support. Transforms existing legacy cameras into continuous-learning AI agents for automated tracking." },
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
 export default function LumanaAI() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const [activeCapability, setActiveCapability] = useState(0);
-
-  const capabilities = [
-    {
-      icon: Eye,
-      title: "Monitor",
-      subtitle: "Automate Surveillance",
-      desc: "Eliminate monitoring fatigue with AI that never sleeps. Receive real-time alerts for specific activities — from unauthorized access to safety violations. Your cameras become proactive sentinels, not passive recorders.",
-      features: ["Real-time threat alerts", "Eliminate monitoring fatigue", "Custom activity detection", "24/7 automated surveillance"],
-    },
-    {
-      icon: Search,
-      title: "Investigate",
-      subtitle: "Accelerate Discovery",
-      desc: "Find precise footage in seconds, not hours. Use natural language search to query your entire camera network. Type 'person in red jacket near entrance' and instantly get results across all cameras.",
-      features: ["Natural language search", "Cross-camera tracking", "Smart multi-parameter search", "Seconds instead of hours"],
-    },
-    {
-      icon: Zap,
-      title: "Respond",
-      subtitle: "Streamline Actions",
-      desc: "Respond as incidents unfold with automatic deterrence and active response capabilities. Trigger loudspeakers, initiate lockdowns, and dispatch emergency services — all from a single platform.",
-      features: ["Automatic alert verification", "Emergency dispatch", "Loudspeaker triggers", "Lockdown initiation"],
-    },
-    {
-      icon: BarChart3,
-      title: "Insight",
-      subtitle: "Generate Intelligence",
-      desc: "Turn video data into actionable business intelligence. Visualize trends, identify patterns, and solve issues before they escalate. Real-time analytics that transform how you operate.",
-      features: ["Real-time analytics", "Trend visualization", "Predictive insights", "Operational optimization"],
-    },
-  ];
-
-  const aiFeatures = [
-    { icon: Crosshair, title: "Gun Detection", desc: "Real-time weapon identification and instant alerts" },
-    { icon: AlertTriangle, title: "Violence Detection", desc: "Behavioral analysis for aggressive activity" },
-    { icon: HardHat, title: "PPE Compliance", desc: "Automated safety equipment monitoring" },
-    { icon: PersonStanding, title: "Slip & Fall", desc: "Instant detection of fall incidents" },
-    { icon: UserX, title: "Unknown Person", desc: "Identify unauthorized individuals" },
-    { icon: Car, title: "License Plate", desc: "Vehicle identification and tracking" },
-    { icon: Users, title: "Max Occupancy", desc: "Real-time capacity monitoring" },
-    { icon: Wind, title: "Vape Detection", desc: "Detect vaping in restricted areas" },
-  ];
-
-  const industries = [
-    { icon: GraduationCap, title: "Education", desc: "Campus security with gun detection and real-time threat response", color: "#2563EB" },
-    { icon: Factory, title: "Manufacturing", desc: "Worker safety, PPE compliance, and operational efficiency", color: "#06B6D4" },
-    { icon: Heart, title: "Healthcare", desc: "Patient safety, fall detection, and medicine security", color: "#10B981" },
-    { icon: ShoppingBag, title: "Retail", desc: "Loss prevention, customer analytics, and store operations", color: "#F59E0B" },
-    { icon: Building2, title: "Government", desc: "Public safety, secure access, and community safeguarding", color: "#8B5CF6" },
-    { icon: Hotel, title: "Hospitality", desc: "Guest safety, property protection, and multi-location management", color: "#EC4899" },
-  ];
+  const [activeTab, setActiveTab] = useState(0);
+  const activeCap = capData[activeTab];
+  const ActiveIcon = activeCap.icon;
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
-      <Navbar />
+    <div className="min-h-screen" style={{ background: "#020617" }}>
+      {/* Scanlines */}
+      <div className="scanlines" />
 
-      {/* ═══════════════════ HERO ═══════════════════ */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
-        <ParticleField count={60} />
+      {/* ═══ HERO ═══ */}
+      <section className="relative min-h-screen flex items-center overflow-hidden" style={{ paddingTop: "80px" }}>
+        <DataParticles count={40} />
+        <div className="grid-pattern absolute inset-0" />
 
-        {/* Background image with parallax */}
-        <motion.div className="absolute inset-0" style={{ y: heroY }}>
-          <img src={IMAGES.hero} alt="" className="w-full h-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background/80" />
-        </motion.div>
+        {/* BG */}
+        <div className="absolute inset-0">
+          <img src={HERO_BG} alt="" className="w-full h-full object-cover" style={{ opacity: 0.35, mixBlendMode: "luminosity" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(2,6,23,0.3), #020617)" }} />
+          <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 70% 50%, transparent, #020617 70%)" }} />
+        </div>
 
-        <motion.div className="container relative z-10 pt-24" style={{ opacity: heroOpacity }}>
-          <div className="max-w-4xl">
-            <motion.div
-              custom={0} variants={fadeUp} initial="hidden" animate="visible"
-              className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-light mb-8"
-            >
-              <span className="w-2 h-2 rounded-full bg-[#06B6D4] animate-pulse" />
-              <span className="text-xs font-medium tracking-[0.15em] text-[#06B6D4] uppercase">
-                Powered by Y&A Solution
-              </span>
+        {/* Glow orbs */}
+        <div className="absolute pointer-events-none" style={{ top: "20%", right: "20%", width: "500px", height: "500px", background: "radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)", borderRadius: "50%", filter: "blur(60px)", animation: "pulse-glow 4s ease-in-out infinite" }} />
+        <div className="absolute pointer-events-none" style={{ bottom: "20%", left: "10%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)", borderRadius: "50%", filter: "blur(50px)", animation: "pulse-glow 4s ease-in-out infinite 2s" }} />
+
+        <div className="container relative z-10 w-full">
+          <div style={{ maxWidth: "850px" }}>
+            {/* Badge */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-3 mb-8"
+              style={{ padding: "6px 16px", border: "1px solid rgba(14,165,233,0.3)", background: "rgba(6,182,212,0.05)", backdropFilter: "blur(10px)", clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)" }}>
+              <div style={{ width: "6px", height: "6px", background: "#22d3ee", boxShadow: "0 0 10px #22d3ee", animation: "pulse-glow 2s infinite" }} />
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#06b6d4" }}>Powered by Y&A Solution</span>
             </motion.div>
 
-            <motion.h1
-              custom={1} variants={fadeUp} initial="hidden" animate="visible"
-              className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight leading-[0.95]"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              <span className="text-white">Lumana</span>
+            {/* Title */}
+            <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
+              style={{ fontSize: "clamp(3rem, 7vw, 6.5rem)", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.05 }}>
+              <GlitchText text="Lumana" className="block" as="span" />
               <br />
-              <span className="text-[#2563EB] glow-text-blue">AI Video</span>
-              <br />
-              <span className="text-white">Intelligence</span>
+              <span className="text-glow" style={{ color: "#22d3ee" }}>AI Video</span>{" "}Intelligence
             </motion.h1>
 
-            <motion.p
-              custom={2} variants={fadeUp} initial="hidden" animate="visible"
-              className="mt-8 text-lg md:text-xl text-white/50 max-w-xl leading-relaxed"
-            >
-              The world's first video intelligence agent. Transform any camera into
-              a continuously learning AI with perception, reasoning, and real-time
-              action capabilities.
-            </motion.p>
+            {/* Typewriter */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-6" style={{ maxWidth: "560px", borderLeft: "2px solid #06b6d4", paddingLeft: "16px" }}>
+              <TypeWriter
+                text="The world's first video intelligence agent. Transform any camera into a continuously learning AI with perception, reasoning, and real-time action capabilities."
+                className="text-lg leading-relaxed"
+                speed={20}
+              />
+            </motion.div>
 
-            <motion.div
-              custom={3} variants={fadeUp} initial="hidden" animate="visible"
-              className="mt-10 flex flex-wrap gap-4"
-            >
-              <motion.span
-                className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold text-white bg-[#2563EB] rounded-lg glow-blue cursor-pointer"
-                whileHover={{ scale: 1.03, boxShadow: "0 0 40px rgba(37, 99, 235, 0.6)" }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Schedule a Demo
-                <ArrowRight size={16} />
-              </motion.span>
-              <motion.span
-                className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold text-white/80 glass-light rounded-lg cursor-pointer"
-                whileHover={{ scale: 1.03, backgroundColor: "rgba(255,255,255,0.1)" }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Watch Overview
-              </motion.span>
+            {/* Buttons */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-10 flex flex-wrap gap-4">
+              <a href="#cta" className="btn-cyber-primary">Initialize Demo <ChevronRight size={16} /></a>
+              <button className="btn-cyber-ghost">RUN_OVERVIEW.exe</button>
             </motion.div>
           </div>
 
-          {/* Hero stats */}
-          <motion.div
-            custom={4} variants={fadeUp} initial="hidden" animate="visible"
-            className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl"
-          >
-            <Counter end={90} suffix="%" label="Fewer False Alerts" />
-            <Counter end={100} suffix="+" label="Object Types" />
-            <Counter end={6} suffix="" label="Industries Served" />
-            <Counter end={24} suffix="/7" label="AI Monitoring" />
+          {/* Stats */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
+            style={{ maxWidth: "800px", borderTop: "1px solid rgba(14,165,233,0.15)", paddingTop: "32px" }}>
+            <StatBox end={90} suffix="%" label="Fewer False Alerts" />
+            <StatBox end={100} suffix="+" label="Object Types" />
+            <StatBox end={6} suffix="" label="Industries Served" />
+            <StatBox end={24} suffix="/7" label="AI Monitoring" />
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* ═══════════════════ VIA-1 TECHNOLOGY ═══════════════════ */}
+      {/* ═══ VIA-1 ═══ */}
       <section className="py-32 relative">
-        <div className="absolute inset-0 grid-pattern opacity-50" />
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7 }}
-            >
-              <span className="text-xs font-semibold tracking-[0.2em] text-[#06B6D4] uppercase">Core Technology</span>
-              <h2
-                className="mt-4 text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
-                VIA-1
-                <br />
-                <span className="text-[#2563EB]">Video Intelligence</span>
-                <br />
-                Agent
+            <RevealOnScroll direction="left">
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4", marginBottom: "16px" }}>
+                <SysLabel text="SYS.CORE_TECHNOLOGY" />
+              </div>
+              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+                VIA-1 <span className="text-glow" style={{ color: "#22d3ee" }}>Intelligence Agent</span>
               </h2>
-              <p className="mt-6 text-lg text-white/50 leading-relaxed">
-                The world's first proprietary video intelligence model. VIA-1 continually
-                learns and adapts to your environment, transforming cameras into AI agents
-                with perception, reasoning, and real-time action capabilities.
+              <p className="mt-6 text-lg leading-relaxed" style={{ color: "#94a3b8" }}>
+                The world's first proprietary video intelligence model. VIA-1 continually learns and adapts to your environment, transforming cameras into AI agents with perception, reasoning, and real-time action capabilities.
               </p>
-
-              <div className="mt-8 space-y-4">
-                {[
-                  "Camera agnostic — works with any IP camera",
-                  "Best-in-class accuracy with 90% fewer false alerts",
-                  "Continuously learning system that gets smarter over time",
-                  "Real-time processing with enterprise-grade GPUs",
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 + 0.3, duration: 0.4 }}
-                    className="flex items-start gap-3"
-                  >
-                    <div className="mt-1 w-5 h-5 rounded-full bg-[#2563EB]/20 flex items-center justify-center shrink-0">
-                      <Check size={12} className="text-[#2563EB]" />
-                    </div>
-                    <span className="text-sm text-white/60">{item}</span>
-                  </motion.div>
+              <div className="mt-8 flex flex-col gap-3">
+                {["Camera agnostic — works with any IP camera protocol", "Best-in-class accuracy with 90% fewer false alerts", "Continuously learning neural network adaptation", "Real-time processing with enterprise-grade GPUs"].map((item, i) => (
+                  <div key={i} className="flex items-start gap-4 transition-all duration-300 hover:translate-x-2"
+                    style={{ padding: "12px 16px", background: "rgba(14,165,233,0.03)", border: "1px solid rgba(14,165,233,0.1)" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", color: "#22d3ee", fontWeight: "bold", fontSize: "14px", marginTop: "2px" }}>[+]</span>
+                    <span className="text-[15px] text-white">{item}</span>
+                  </div>
                 ))}
               </div>
-            </motion.div>
+            </RevealOnScroll>
 
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="relative rounded-2xl overflow-hidden">
-                <img src={IMAGES.aiVision} alt="VIA-1 AI Vision" className="w-full rounded-2xl" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+            <RevealOnScroll direction="right">
+              <div className="relative">
+                <div className="img-tech-container glow-cyan">
+                  <div className="img-tech-inner">
+                    <ScannerLine />
+                    <img src={AI_VISION} alt="VIA-1 AI Vision" />
+                  </div>
+                </div>
+                {/* Float stat */}
+                <div className="absolute z-20" style={{ bottom: "-20px", right: "-10px", padding: "16px 24px", border: "1px solid #06b6d4", background: "rgba(2,6,23,0.9)", backdropFilter: "blur(10px)", clipPath: "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "2rem", fontWeight: 800, color: "#22d3ee", lineHeight: 1 }}>90%</div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", textTransform: "uppercase", color: "#94a3b8", marginTop: "8px", letterSpacing: "0.1em" }}>False Alert Reduction</div>
+                </div>
               </div>
-              {/* Floating stat card */}
-              <motion.div
-                className="absolute -bottom-6 -left-6 glass rounded-xl p-5 glow-blue"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.6, duration: 0.4 }}
-              >
-                <div className="text-3xl font-bold text-[#2563EB]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>90%</div>
-                <div className="text-xs text-white/50 mt-1">Fewer False Alerts</div>
-              </motion.div>
-            </motion.div>
+            </RevealOnScroll>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════ PLATFORM COMPONENTS ═══════════════════ */}
-      <section className="py-32 relative">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <span className="text-xs font-semibold tracking-[0.2em] text-[#2563EB] uppercase">Platform Architecture</span>
-            <h2
-              className="mt-4 text-4xl md:text-5xl font-bold text-white tracking-tight"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              Four Pillars of
-              <br />
-              <span className="text-[#2563EB]">Intelligent Security</span>
+      {/* ═══ PLATFORM ═══ */}
+      <section className="py-32 relative" id="platform">
+        <div className="grid-pattern absolute inset-0" style={{ opacity: 0.5 }} />
+        <div className="container relative z-10">
+          <RevealOnScroll className="text-center mb-20">
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
+              <SysLabel text="SYS.ARCHITECTURE" />
+            </div>
+            <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+              Four Pillars of <span className="text-glow" style={{ color: "#22d3ee" }}>Intelligence</span>
             </h2>
-          </motion.div>
+          </RevealOnScroll>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: Cpu,
-                title: "Core",
-                desc: "AI engine and video processor. Replaces or works with existing NVRs. Real-time processing using enterprise-grade GPUs with local AI for heavy workloads.",
-                accent: "#2563EB",
-              },
-              {
-                icon: Cloud,
-                title: "Cloud",
-                desc: "Hybrid-cloud architecture where most processing runs locally. Cloud adds remote access, additional processing power, and seamless updates.",
-                accent: "#06B6D4",
-              },
-              {
-                icon: Eye,
-                title: "VMS+",
-                desc: "AI-driven control center accessible from any browser or mobile device. Centralized management with unlimited cameras, users, and cloud archiving.",
-                accent: "#8B5CF6",
-              },
-              {
-                icon: Camera,
-                title: "Cameras",
-                desc: "Works with any IP camera. Transforms existing cameras into continuous-learning AI agents for automatic monitoring and analysis.",
-                accent: "#10B981",
-              },
-            ].map((pillar, i) => {
-              const Icon = pillar.icon;
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {pillars.map((p, i) => {
+              const Icon = p.icon;
               return (
-                <motion.div
-                  key={pillar.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="group"
-                >
-                  <motion.div
-                    className="glass rounded-xl p-7 h-full relative overflow-hidden transition-all duration-500"
-                    whileHover={{ y: -6, borderColor: `${pillar.accent}40` }}
-                  >
-                    {/* Glow effect on hover */}
-                    <div
-                      className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-3xl"
-                      style={{ backgroundColor: pillar.accent }}
-                    />
-
-                    <div
-                      className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 relative z-10"
-                      style={{ backgroundColor: `${pillar.accent}15` }}
-                    >
-                      <Icon size={26} style={{ color: pillar.accent }} />
+                <RevealOnScroll key={i} delay={i * 0.1}>
+                  <SpotlightCard className="glass p-8 h-full flex flex-col">
+                    <div className="flex justify-between items-start mb-6 pb-4" style={{ borderBottom: "1px solid rgba(14,165,233,0.15)" }}>
+                      <Icon size={28} style={{ color: "#22d3ee" }} />
+                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", color: "rgba(14,165,233,0.3)", fontWeight: "bold" }}>{p.num}</span>
                     </div>
-                    <h3
-                      className="text-xl font-semibold text-white mb-3 relative z-10"
-                      style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                    >
-                      {pillar.title}
-                    </h3>
-                    <p className="text-sm text-white/40 leading-relaxed relative z-10">{pillar.desc}</p>
-                  </motion.div>
-                </motion.div>
+                    <h3 className="text-xl font-semibold text-white mb-3">{p.title}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>{p.desc}</p>
+                  </SpotlightCard>
+                </RevealOnScroll>
               );
             })}
           </div>
 
-          {/* Dashboard image */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="mt-16 relative rounded-2xl overflow-hidden glow-blue"
-          >
-            <img src={IMAGES.dashboard} alt="Lumana VMS+ Dashboard" className="w-full rounded-2xl" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/20" />
-          </motion.div>
+          <RevealOnScroll className="mt-20">
+            <div className="relative overflow-hidden" style={{ border: "1px solid rgba(14,165,233,0.2)", background: "#020617" }}>
+              <ScannerLine />
+              <img src={DASHBOARD} alt="Lumana VMS+ Dashboard" className="w-full block" />
+            </div>
+          </RevealOnScroll>
         </div>
       </section>
 
-      {/* ═══════════════════ CAPABILITIES ═══════════════════ */}
-      <section className="py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#2563EB]/3 to-transparent" />
-        <div className="container relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <span className="text-xs font-semibold tracking-[0.2em] text-[#06B6D4] uppercase">Key Capabilities</span>
-            <h2
-              className="mt-4 text-4xl md:text-5xl font-bold text-white tracking-tight"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              See. Understand. Act.
+      {/* ═══ CAPABILITIES ═══ */}
+      <section className="py-32 relative" id="capabilities">
+        <div className="container">
+          <RevealOnScroll className="text-center mb-20">
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
+              <SysLabel text="SYS.CAPABILITIES" />
+            </div>
+            <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+              See. <span className="text-glow" style={{ color: "#22d3ee" }}>Understand.</span> Act.
             </h2>
-          </motion.div>
+          </RevealOnScroll>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
             {/* Tabs */}
-            <div className="lg:col-span-4 flex flex-row lg:flex-col gap-3">
-              {capabilities.map((cap, i) => {
+            <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0">
+              {capData.map((cap, i) => {
                 const Icon = cap.icon;
-                const isActive = activeCapability === i;
+                const isActive = activeTab === i;
                 return (
-                  <motion.button
-                    key={cap.title}
-                    onClick={() => setActiveCapability(i)}
-                    className={`flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-300 w-full ${
-                      isActive
-                        ? "glass border-[#2563EB]/30 glow-blue"
-                        : "hover:bg-white/5"
-                    }`}
-                    whileHover={{ x: isActive ? 0 : 4 }}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.4 }}
-                  >
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
-                      isActive ? "bg-[#2563EB]/20" : "bg-white/5"
-                    }`}>
-                      <Icon size={20} className={isActive ? "text-[#2563EB]" : "text-white/40"} />
+                  <button key={i} onClick={() => setActiveTab(i)}
+                    className="cap-tab flex items-center gap-4 p-4 text-left w-full min-w-[200px] lg:min-w-0 transition-all duration-300"
+                    style={{
+                      borderLeft: isActive ? "3px solid #22d3ee" : "3px solid transparent",
+                      border: isActive ? "1px solid rgba(14,165,233,0.2)" : "1px solid transparent",
+                      borderLeftWidth: "3px",
+                      borderLeftColor: isActive ? "#22d3ee" : "transparent",
+                      background: isActive ? "rgba(14,165,233,0.08)" : "transparent",
+                    }}>
+                    <Icon size={22} style={{ color: isActive ? "#22d3ee" : "#64748b", filter: isActive ? "drop-shadow(0 0 8px rgba(34,211,238,0.5))" : "none", transition: "all 0.3s", flexShrink: 0 }} />
+                    <div>
+                      <h4 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "14px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", color: isActive ? "#22d3ee" : "#64748b", transition: "color 0.3s" }}>{cap.title}</h4>
+                      <p className="text-[12px] mt-0.5 hidden sm:block" style={{ color: "rgba(255,255,255,0.35)" }}>{cap.subtitle}</p>
                     </div>
-                    <div className="hidden lg:block">
-                      <div className={`text-sm font-semibold ${isActive ? "text-white" : "text-white/50"}`}>
-                        {cap.title}
-                      </div>
-                      <div className={`text-xs ${isActive ? "text-white/50" : "text-white/30"}`}>
-                        {cap.subtitle}
-                      </div>
-                    </div>
-                  </motion.button>
+                  </button>
                 );
               })}
             </div>
 
             {/* Content */}
-            <div className="lg:col-span-8">
-              <motion.div
-                key={activeCapability}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="glass rounded-2xl p-8 md:p-10"
-              >
-                <div className="flex items-center gap-3 mb-6">
-                  {(() => {
-                    const Icon = capabilities[activeCapability].icon;
-                    return <Icon size={28} className="text-[#2563EB]" />;
-                  })()}
-                  <h3
-                    className="text-2xl font-bold text-white"
-                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                  >
-                    {capabilities[activeCapability].title}
-                  </h3>
-                </div>
-                <p className="text-white/50 leading-relaxed mb-8">
-                  {capabilities[activeCapability].desc}
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {capabilities[activeCapability].features.map((feature, i) => (
-                    <motion.div
-                      key={feature}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.08, duration: 0.3 }}
-                      className="flex items-center gap-3 p-3 rounded-lg bg-white/5"
-                    >
-                      <ChevronRight size={14} className="text-[#2563EB] shrink-0" />
-                      <span className="text-sm text-white/70">{feature}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
+            <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}
+              className="p-10"
+              style={{ background: "radial-gradient(circle at top right, rgba(14,165,233,0.08), transparent 50%), rgba(15,23,42,0.5)", border: "1px solid rgba(14,165,233,0.2)", clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)" }}>
+              <h3 className="flex items-center gap-3 text-2xl md:text-3xl font-bold text-white mb-4">
+                <ActiveIcon size={30} style={{ color: "#22d3ee" }} />
+                <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>{activeCap.title}</span>
+              </h3>
+              <p className="text-base md:text-lg leading-relaxed mb-8" style={{ color: "#e2e8f0", opacity: 0.9 }}>{activeCap.desc}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {activeCap.features.map((f, i) => (
+                  <div key={i} className="flex items-center gap-3 p-3" style={{ background: "rgba(0,0,0,0.3)", borderLeft: "2px solid #06b6d4" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", color: "#06b6d4", fontWeight: "bold", fontSize: "13px" }}>&gt;_</span>
+                    <span className="text-sm font-medium text-white">{f}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════ AI DETECTION FEATURES ═══════════════════ */}
-      <section className="py-32 relative">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <span className="text-xs font-semibold tracking-[0.2em] text-[#2563EB] uppercase">AI Detection</span>
-            <h2
-              className="mt-4 text-4xl md:text-5xl font-bold text-white tracking-tight"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              Intelligent Threat
-              <br />
-              <span className="text-[#2563EB]">Detection Suite</span>
-            </h2>
-            <p className="mt-4 text-lg text-white/40 max-w-2xl mx-auto">
-              Industry-leading AI features that detect, classify, and alert on critical events in real-time.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
-          >
-            {aiFeatures.map((feature) => {
-              const Icon = feature.icon;
-              return (
-                <motion.div
-                  key={feature.title}
-                  variants={fadeChild}
-                  className="group"
-                >
-                  <motion.div
-                    className="glass rounded-xl p-6 text-center h-full transition-all duration-300"
-                    whileHover={{ y: -4, borderColor: "rgba(37, 99, 235, 0.3)", boxShadow: "0 0 30px rgba(37, 99, 235, 0.15)" }}
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-[#2563EB]/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-[#2563EB]/20 transition-colors">
-                      <Icon size={22} className="text-[#2563EB]" />
-                    </div>
-                    <h4 className="text-sm font-semibold text-white mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {feature.title}
-                    </h4>
-                    <p className="text-xs text-white/35">{feature.desc}</p>
-                  </motion.div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════════════════ INDUSTRIES ═══════════════════ */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={IMAGES.industries} alt="" className="w-full h-full object-cover opacity-15" />
-          <div className="absolute inset-0 bg-background/80" />
-        </div>
-        <div className="container relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <span className="text-xs font-semibold tracking-[0.2em] text-[#06B6D4] uppercase">Industries</span>
-            <h2
-              className="mt-4 text-4xl md:text-5xl font-bold text-white tracking-tight"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              Built for Every
-              <br />
-              <span className="text-[#06B6D4]">Industry</span>
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industries.map((industry, i) => {
-              const Icon = industry.icon;
-              return (
-                <motion.div
-                  key={industry.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08, duration: 0.5 }}
-                >
-                  <motion.div
-                    className="glass rounded-xl p-7 h-full group transition-all duration-300"
-                    whileHover={{ y: -4, borderColor: `${industry.color}30` }}
-                  >
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-colors"
-                      style={{ backgroundColor: `${industry.color}15` }}
-                    >
-                      <Icon size={24} style={{ color: industry.color }} />
-                    </div>
-                    <h3
-                      className="text-lg font-semibold text-white mb-2"
-                      style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                    >
-                      {industry.title}
-                    </h3>
-                    <p className="text-sm text-white/40 leading-relaxed">{industry.desc}</p>
-                    <div className="mt-4 flex items-center gap-1 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: industry.color }}>
-                      Learn more <ChevronRight size={12} />
-                    </div>
-                  </motion.div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════ SEARCH CAPABILITIES ═══════════════════ */}
+      {/* ═══ SEARCH ═══ */}
       <section className="py-32 relative">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              <span className="text-xs font-semibold tracking-[0.2em] text-[#2563EB] uppercase">AI Search</span>
-              <h2
-                className="mt-4 text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
-                Find Anything.
-                <br />
-                <span className="text-[#2563EB]">Instantly.</span>
+            <RevealOnScroll direction="left">
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4", marginBottom: "16px" }}>
+                <SysLabel text="SYS.SEARCH_PROTOCOL" />
+              </div>
+              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+                Find Anything.<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Instantly.</span>
               </h2>
-              <p className="mt-6 text-lg text-white/50 leading-relaxed">
-                Use natural language to search your entire camera network. Type a query like
-                "person in red jacket near entrance" and Lumana's AI instantly finds matching
-                footage across all cameras.
+              <p className="mt-6 text-lg leading-relaxed" style={{ color: "#94a3b8" }}>
+                Use natural language to search your entire camera network. Type a query like "person in red jacket near entrance" and Lumana's AI instantly parses the network to locate matching footprint parameters.
               </p>
+              <div className="mt-10 flex flex-col gap-4">
+                {[
+                  { title: "NLP Text Search", desc: "Natural language processing understands context, behaviors, interactions, and timelines without SQL syntax.", color: "#22d3ee" },
+                  { title: "Deep Smart Search", desc: "Layer multiple parameters — physiological attributes, vehicle details, 100+ object vectors, and facial recognition.", color: "#60a5fa" },
+                  { title: "Cross-Node Tracking", desc: "Track targets across all camera nodes with a single click. Map complete trajectories through the facility matrix.", color: "#8b5cf6" },
+                ].map((card, i) => (
+                  <div key={i} className="group p-6 transition-all duration-300"
+                    style={{ background: "rgba(15,23,42,0.4)", borderLeft: `2px solid ${i === 0 ? "rgba(14,165,233,0.3)" : "rgba(14,165,233,0.12)"}` }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderLeftColor = "#22d3ee"; e.currentTarget.style.background = "rgba(15,23,42,0.8)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderLeftColor = "rgba(14,165,233,0.12)"; e.currentTarget.style.background = "rgba(15,23,42,0.4)"; }}>
+                    <h4 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: card.color, marginBottom: "8px" }}>{card.title}</h4>
+                    <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>{card.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </RevealOnScroll>
 
-              <div className="mt-8 space-y-6">
-                <div className="glass rounded-xl p-5">
-                  <h4 className="text-sm font-semibold text-[#2563EB] mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    Text Search
-                  </h4>
-                  <p className="text-sm text-white/40">
-                    Natural language processing understands context, behaviors, interactions, and timelines.
-                    No special training required.
-                  </p>
-                </div>
-                <div className="glass rounded-xl p-5">
-                  <h4 className="text-sm font-semibold text-[#06B6D4] mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    Smart Search
-                  </h4>
-                  <p className="text-sm text-white/40">
-                    Layer multiple parameters — people attributes, vehicle details, 100+ object types,
-                    event tags, and facial recognition.
-                  </p>
-                </div>
-                <div className="glass rounded-xl p-5">
-                  <h4 className="text-sm font-semibold text-[#10B981] mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    Cross-Camera Tracking
-                  </h4>
-                  <p className="text-sm text-white/40">
-                    Track a person or vehicle across all cameras with a single click. Follow their
-                    complete path through your facility.
-                  </p>
+            <RevealOnScroll direction="right">
+              <div className="img-tech-container glow-cyan">
+                <div className="img-tech-inner">
+                  <ScannerLine />
+                  <img src={SEARCH_IMG} alt="AI Video Search" />
                 </div>
               </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="relative rounded-2xl overflow-hidden glow-cyan">
-                <img src={IMAGES.search} alt="AI Video Search" className="w-full rounded-2xl" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
-              </div>
-            </motion.div>
+            </RevealOnScroll>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════ SECURITY & TRUST ═══════════════════ */}
-      <section className="py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/5 to-[#06B6D4]/5" />
-        <div className="container relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: Lock, title: "Zero-Trust Architecture", desc: "Every access request is verified, validated, and encrypted. No implicit trust." },
-              { icon: Shield, title: "End-to-End Encryption", desc: "Protects video data across edge, cloud, and all connected devices." },
-              { icon: Users, title: "Enterprise Access Controls", desc: "Granular permissions with role-based access. Unlimited users and cameras." },
-            ].map((item, i) => {
-              const Icon = item.icon;
+      {/* ═══ AI DETECTION ═══ */}
+      <section className="py-32 relative" id="detection">
+        <div className="container">
+          <RevealOnScroll className="text-center mb-16">
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
+              <SysLabel text="SYS.THREAT_DETECTION" />
+            </div>
+            <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+              Intelligent Threat<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Detection Suite</span>
+            </h2>
+          </RevealOnScroll>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {aiDetections.map((d, i) => {
+              const Icon = d.icon;
               return (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="glass rounded-xl p-7 text-center"
-                >
-                  <div className="w-14 h-14 rounded-xl bg-[#2563EB]/10 flex items-center justify-center mx-auto mb-5">
-                    <Icon size={26} className="text-[#2563EB]" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-white/40">{item.desc}</p>
-                </motion.div>
+                <RevealOnScroll key={i} delay={i * 0.08}>
+                  <SpotlightCard className="p-6 h-full" style={{ background: "rgba(15,23,42,0.4)", border: "1px solid rgba(14,165,233,0.12)" } as any}>
+                    <Icon size={28} className="mb-5" style={{ color: "#06b6d4" }} />
+                    <h4 className="text-base font-semibold text-white mb-2">{d.title}</h4>
+                    <p className="text-[13px] leading-relaxed" style={{ color: "#94a3b8" }}>{d.desc}</p>
+                  </SpotlightCard>
+                </RevealOnScroll>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════ CTA ═══════════════════ */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 grid-pattern opacity-30" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#2563EB]/10 rounded-full blur-[150px]" />
-
-        <div className="container relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="text-xs font-semibold tracking-[0.2em] text-[#2563EB] uppercase">Ready to Transform?</span>
-            <h2
-              className="mt-6 text-4xl md:text-6xl font-bold text-white tracking-tight"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              Upgrade Your Security
-              <br />
-              <span className="text-[#2563EB]">Infrastructure Today</span>
-            </h2>
-            <p className="mt-6 text-lg text-white/40 max-w-xl mx-auto">
-              Join organizations worldwide that trust Lumana AI to protect their people,
-              assets, and operations. Schedule a personalized demo today.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <motion.span
-                className="inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold text-white bg-[#2563EB] rounded-lg glow-blue cursor-pointer"
-                whileHover={{ scale: 1.03, boxShadow: "0 0 50px rgba(37, 99, 235, 0.6)" }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Schedule a Consultation
-                <ArrowRight size={16} />
-              </motion.span>
+      {/* ═══ INDUSTRIES ═══ */}
+      <section className="py-32 relative overflow-hidden" id="industries">
+        <div className="absolute inset-0">
+          <img src={INDUSTRIES_BG} alt="" className="w-full h-full object-cover" style={{ opacity: 0.12, filter: "grayscale(100%) contrast(1.2)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, #020617, rgba(2,6,23,0.8), #020617)" }} />
+        </div>
+        <div className="container relative z-10">
+          <RevealOnScroll className="text-center mb-16">
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
+              <SysLabel text="SYS.DEPLOYMENT" />
             </div>
-          </motion.div>
+            <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+              Built for Every <span className="text-glow" style={{ color: "#22d3ee" }}>Sector</span>
+            </h2>
+          </RevealOnScroll>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {industries.map((ind, i) => {
+              const Icon = ind.icon;
+              return (
+                <RevealOnScroll key={i} delay={i * 0.08}>
+                  <div className="group relative p-8 h-full overflow-hidden transition-all duration-300 hover:bg-[rgba(15,23,42,0.8)]"
+                    style={{ background: "rgba(15,23,42,0.5)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                    <div className="absolute top-0 left-0 w-full h-[2px] bg-[#06b6d4] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                    <Icon size={32} className="mb-6" style={{ color: "#22d3ee" }} />
+                    <h3 className="text-lg font-semibold text-white mb-3">{ind.title}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>{ind.desc}</p>
+                    <div className="flex items-center gap-2 mt-6 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+                      style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 600, textTransform: "uppercase", color: "#22d3ee" }}>
+                      Load Module <ChevronRight size={14} />
+                    </div>
+                  </div>
+                </RevealOnScroll>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      <Footer />
+      {/* ═══ SECURITY ═══ */}
+      <section className="py-32 relative">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { icon: Lock, title: "Zero-Trust Framework", desc: "Every internal/external request is cryptographically verified and validated. No implicit trust zones." },
+              { icon: Shield, title: "End-to-End Encryption", desc: "Military-grade encryption protects video data streams across edge, cloud, and connected terminal devices." },
+              { icon: Users, title: "Granular Access Control", desc: "Enterprise RBAC permissions with strict audit logging. Scale to unlimited operational personnel." },
+            ].map((t, i) => {
+              const Icon = t.icon;
+              return (
+                <RevealOnScroll key={i} delay={i * 0.1}>
+                  <div className="p-8 text-center h-full" style={{ border: "1px dashed rgba(14,165,233,0.15)", background: "rgba(15,23,42,0.2)" }}>
+                    <Icon size={32} className="mx-auto mb-6" style={{ color: "#22d3ee" }} />
+                    <h3 className="text-lg font-semibold text-white mb-3">{t.title}</h3>
+                    <p className="text-sm" style={{ color: "#94a3b8" }}>{t.desc}</p>
+                  </div>
+                </RevealOnScroll>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ CTA ═══ */}
+      <section className="py-32 relative text-center overflow-hidden" id="cta"
+        style={{ borderTop: "1px solid rgba(14,165,233,0.15)", background: "radial-gradient(circle at 50% 100%, rgba(6,182,212,0.1), #020617)" }}>
+        <div className="grid-pattern absolute inset-0" style={{ opacity: 0.3 }} />
+        <RadarSweep />
+        <div className="container relative z-10">
+          <RevealOnScroll>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4", marginBottom: "24px" }}>
+              <SysLabel text="SYS.INITIALIZE" />
+            </div>
+            <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+              Upgrade Your Security<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Infrastructure Today</span>
+            </h2>
+            <p className="mt-6 text-lg mx-auto" style={{ color: "#94a3b8", maxWidth: "540px" }}>
+              Deploy the world's most advanced AI video intelligence platform. Schedule a precise technical demonstration.
+            </p>
+            <div className="mt-10">
+              <a href="mailto:hello@yasolution.com" className="btn-cyber-primary" style={{ padding: "16px 36px" }}>
+                Init_Consultation.exe <ChevronRight size={16} />
+              </a>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
     </div>
   );
 }

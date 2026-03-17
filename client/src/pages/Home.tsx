@@ -1,256 +1,170 @@
 /**
- * Home Page - Y&A Solution
- * Design: Dark theme, Space Grotesk headings, animated hero with particles
+ * DESIGN: Cyberpunk Terminal Home Page
+ * Deep space black + cyan accents, terminal naming, clip-path buttons
  * Brief landing that directs to /lumana-ai as the main offering
  */
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ParticleField from "@/components/ParticleField";
+import DataParticles from "@/components/cyber/DataParticles";
+import GlitchText from "@/components/cyber/GlitchText";
+import TypeWriter from "@/components/cyber/TypeWriter";
+import ScrambleText from "@/components/cyber/ScrambleText";
+import SpotlightCard from "@/components/cyber/SpotlightCard";
+import RevealOnScroll from "@/components/cyber/RevealOnScroll";
+import ScannerLine from "@/components/cyber/ScannerLine";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Shield, Cpu, Cloud, Eye } from "lucide-react";
+import { Shield, Cpu, Cloud, Eye, ChevronRight } from "lucide-react";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  }),
-};
+const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_hero_command_center-Cv2ArTrtGKeGMoxxSuEXKV.webp";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ background: "#020617" }}>
       <Navbar />
+      <div className="scanlines" />
 
-      {/* Hero */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        <ParticleField count={50} />
-        <div className="absolute inset-0 grid-pattern" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+      {/* ═══ HERO ═══ */}
+      <section className="relative min-h-screen flex items-center overflow-hidden" style={{ paddingTop: "80px" }}>
+        <DataParticles count={35} />
+        <div className="grid-pattern absolute inset-0" />
 
-        {/* Decorative orbs */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#2563EB]/10 rounded-full blur-[120px] pulse-glow" />
-        <div className="absolute bottom-1/3 left-1/6 w-72 h-72 bg-[#06B6D4]/8 rounded-full blur-[100px] pulse-glow" style={{ animationDelay: "1.5s" }} />
+        {/* Glow orbs */}
+        <div className="absolute pointer-events-none" style={{ top: "15%", right: "25%", width: "500px", height: "500px", background: "radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%)", borderRadius: "50%", filter: "blur(60px)", animation: "pulse-glow 4s ease-in-out infinite" }} />
+        <div className="absolute pointer-events-none" style={{ bottom: "25%", left: "10%", width: "350px", height: "350px", background: "radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)", borderRadius: "50%", filter: "blur(50px)", animation: "pulse-glow 4s ease-in-out infinite 2s" }} />
 
-        <div className="container relative z-10 pt-24">
-          <div className="max-w-4xl">
-            <motion.div
-              custom={0}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-light mb-8"
-            >
-              <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
-              <span className="text-xs font-medium tracking-[0.15em] text-white/70 uppercase">
+        <div className="container relative z-10 pt-12">
+          <div style={{ maxWidth: "850px" }}>
+            {/* Badge */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-3 mb-8"
+              style={{ padding: "6px 16px", border: "1px solid rgba(14,165,233,0.3)", background: "rgba(6,182,212,0.05)", backdropFilter: "blur(10px)", clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)" }}>
+              <div style={{ width: "6px", height: "6px", background: "#22d3ee", boxShadow: "0 0 10px #22d3ee", animation: "pulse-glow 2s infinite" }} />
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#06b6d4" }}>
                 Technology Solutions Partner
               </span>
             </motion.div>
 
-            <motion.h1
-              custom={1}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight leading-[0.95]"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              <span className="text-white">Engineering</span>
+            {/* Title */}
+            <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
+              style={{ fontSize: "clamp(3rem, 7vw, 6.5rem)", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.05 }}>
+              <GlitchText text="Engineering" className="block" as="span" />
               <br />
-              <span className="text-white">Tomorrow's</span>
+              Tomorrow's
               <br />
-              <span className="text-[#2563EB] glow-text-blue">Digital Edge</span>
+              <span className="text-glow" style={{ color: "#22d3ee" }}>Digital Edge</span>
             </motion.h1>
 
-            <motion.p
-              custom={2}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              className="mt-8 text-lg md:text-xl text-white/50 max-w-xl leading-relaxed"
-            >
-              We architect scalable, secure, and intelligent systems that
-              transform how businesses operate. From strategy to
-              deployment — precision at every layer.
-            </motion.p>
+            {/* Typewriter */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-6" style={{ maxWidth: "540px", borderLeft: "2px solid #06b6d4", paddingLeft: "16px" }}>
+              <TypeWriter
+                text="We architect scalable, secure, and intelligent systems that transform how businesses operate. From strategy to deployment — precision at every layer."
+                className="text-lg leading-relaxed"
+                speed={18}
+              />
+            </motion.div>
 
-            <motion.div
-              custom={3}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              className="mt-10 flex flex-wrap gap-4"
-            >
-              <Link href="/lumana-ai">
-                <motion.span
-                  className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold text-white bg-[#2563EB] rounded-lg glow-blue"
-                  whileHover={{ scale: 1.03, boxShadow: "0 0 40px rgba(37, 99, 235, 0.6)" }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  Explore Lumana AI
-                  <ArrowRight size={16} />
-                </motion.span>
+            {/* Buttons */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-10 flex flex-wrap gap-4">
+              <Link href="/lumana-ai" className="btn-cyber-primary">
+                Explore Lumana AI <ChevronRight size={16} />
               </Link>
-              <motion.span
-                className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold text-white/80 glass-light rounded-lg"
-                whileHover={{ scale: 1.03, backgroundColor: "rgba(255,255,255,0.1)" }}
-                whileTap={{ scale: 0.97 }}
-              >
-                View Our Work
-              </motion.span>
+              <button className="btn-cyber-ghost">VIEW_PORTFOLIO.exe</button>
             </motion.div>
           </div>
 
           {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2 }}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          >
-            <span className="text-xs text-white/30 tracking-widest uppercase">Scroll</span>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center pt-1.5"
-            >
-              <div className="w-1 h-2 rounded-full bg-white/40" />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }}
+            className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#334155" }}>SCROLL</span>
+            <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-5 h-8 flex items-start justify-center pt-1.5"
+              style={{ border: "1px solid rgba(14,165,233,0.2)" }}>
+              <div className="w-1 h-2 bg-[#22d3ee]" style={{ boxShadow: "0 0 6px #22d3ee" }} />
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Solutions Preview */}
+      {/* ═══ SOLUTIONS ═══ */}
       <section className="py-32 relative" id="services">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="mb-16"
-          >
-            <span className="text-xs font-semibold tracking-[0.2em] text-[#2563EB] uppercase">What We Do</span>
-            <h2
-              className="mt-4 text-4xl md:text-5xl font-bold text-white tracking-tight"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              Solutions Built
-              <br />
-              for Scale
+          <RevealOnScroll className="mb-16">
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4", marginBottom: "16px" }}>
+              <ScrambleText text="SYS.SOLUTIONS" />
+            </div>
+            <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+              Solutions Built<br />for <span className="text-glow" style={{ color: "#22d3ee" }}>Scale</span>
             </h2>
-          </motion.div>
+          </RevealOnScroll>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Eye, title: "AI Video Intelligence", desc: "Enterprise-grade AI video security powered by Lumana. Transform any camera into an intelligent agent.", accent: "#2563EB", link: "/lumana-ai" },
-              { icon: Shield, title: "Cybersecurity", desc: "Zero-trust architecture and end-to-end encryption to protect your most critical assets.", accent: "#06B6D4", link: null },
-              { icon: Cloud, title: "Cloud Infrastructure", desc: "Hybrid-cloud solutions that scale with your business. Reliable, fast, and always available.", accent: "#8B5CF6", link: null },
-              { icon: Cpu, title: "AI Integration", desc: "Custom AI solutions that automate workflows and generate actionable insights from your data.", accent: "#10B981", link: null },
-            ].map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-              >
-                {item.link ? (
-                  <Link href={item.link}>
-                    <SolutionCard item={item} />
-                  </Link>
-                ) : (
-                  <SolutionCard item={item} />
-                )}
-              </motion.div>
-            ))}
+              { icon: Eye, title: "AI Video Intelligence", desc: "Enterprise-grade AI video security powered by Lumana. Transform any camera into an intelligent agent.", color: "#22d3ee", link: "/lumana-ai" },
+              { icon: Shield, title: "Cybersecurity", desc: "Zero-trust architecture and end-to-end encryption to protect your most critical assets.", color: "#60a5fa", link: null },
+              { icon: Cloud, title: "Cloud Infrastructure", desc: "Hybrid-cloud solutions that scale with your business. Reliable, fast, and always available.", color: "#8b5cf6", link: null },
+              { icon: Cpu, title: "AI Integration", desc: "Custom AI solutions that automate workflows and generate actionable insights from your data.", color: "#34d399", link: null },
+            ].map((item, i) => {
+              const Icon = item.icon;
+              const card = (
+                <SpotlightCard className="glass p-8 h-full flex flex-col">
+                  <Icon size={28} className="mb-6" style={{ color: item.color }} />
+                  <h3 className="text-lg font-semibold text-white mb-3">{item.title}</h3>
+                  <p className="text-sm leading-relaxed flex-1" style={{ color: "#94a3b8" }}>{item.desc}</p>
+                  {item.link && (
+                    <div className="flex items-center gap-2 mt-6"
+                      style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 600, textTransform: "uppercase", color: "#22d3ee" }}>
+                      Load Module <ChevronRight size={14} />
+                    </div>
+                  )}
+                </SpotlightCard>
+              );
+              return (
+                <RevealOnScroll key={i} delay={i * 0.1}>
+                  {item.link ? <Link href={item.link}>{card}</Link> : card}
+                </RevealOnScroll>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Lumana AI Feature Banner */}
+      {/* ═══ LUMANA FEATURE BANNER ═══ */}
       <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/10 to-[#06B6D4]/5" />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 30% 50%, rgba(6,182,212,0.08), transparent 60%)" }} />
         <div className="container relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <span className="text-xs font-semibold tracking-[0.2em] text-[#06B6D4] uppercase">Featured Solution</span>
-                <h2
-                  className="mt-4 text-4xl md:text-5xl font-bold text-white tracking-tight"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                >
-                  Lumana AI
-                  <br />
-                  <span className="text-[#2563EB]">Video Intelligence</span>
-                </h2>
-                <p className="mt-6 text-lg text-white/50 leading-relaxed max-w-lg">
-                  The world's first video intelligence agent. Transform any camera into a
-                  continuously learning AI agent with perception, reasoning, and real-time
-                  action capabilities.
-                </p>
-                <Link href="/lumana-ai">
-                  <motion.span
-                    className="inline-flex items-center gap-2 mt-8 px-7 py-3.5 text-sm font-semibold text-white bg-[#2563EB] rounded-lg glow-blue"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    Learn More
-                    <ArrowRight size={16} />
-                  </motion.span>
-                </Link>
-              </motion.div>
-            </div>
-            <motion.div
-              className="flex-1"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="relative rounded-2xl overflow-hidden glow-blue">
-                <img
-                  src="https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_hero_command_center-Cv2ArTrtGKeGMoxxSuEXKV.webp"
-                  alt="Lumana AI Command Center"
-                  className="w-full rounded-2xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <RevealOnScroll direction="left">
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4", marginBottom: "16px" }}>
+                <ScrambleText text="SYS.FEATURED_SOLUTION" />
               </div>
-            </motion.div>
+              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+                Lumana AI<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Video Intelligence</span>
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed" style={{ color: "#94a3b8", maxWidth: "480px" }}>
+                The world's first video intelligence agent. Transform any camera into a continuously learning AI agent with perception, reasoning, and real-time action capabilities.
+              </p>
+              <Link href="/lumana-ai" className="btn-cyber-primary mt-8 inline-flex">
+                Learn More <ChevronRight size={16} />
+              </Link>
+            </RevealOnScroll>
+
+            <RevealOnScroll direction="right">
+              <div className="img-tech-container glow-cyan">
+                <div className="img-tech-inner">
+                  <ScannerLine />
+                  <img src={HERO_BG} alt="Lumana AI Command Center" />
+                </div>
+              </div>
+            </RevealOnScroll>
           </div>
         </div>
       </section>
 
       <Footer />
     </div>
-  );
-}
-
-function SolutionCard({ item }: { item: { icon: React.ElementType; title: string; desc: string; accent: string } }) {
-  const Icon = item.icon;
-  return (
-    <motion.div
-      className="group glass rounded-xl p-6 h-full transition-all duration-300 hover:border-white/15"
-      whileHover={{ y: -4, boxShadow: `0 0 30px ${item.accent}20` }}
-    >
-      <div
-        className="w-12 h-12 rounded-lg flex items-center justify-center mb-5"
-        style={{ backgroundColor: `${item.accent}15` }}
-      >
-        <Icon size={22} style={{ color: item.accent }} />
-      </div>
-      <h3 className="text-lg font-semibold text-white mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-        {item.title}
-      </h3>
-      <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
-    </motion.div>
   );
 }
