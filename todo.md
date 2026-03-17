@@ -1,3 +1,4 @@
 # Current Tasks
 
-- [ ] Darken the favicon - currently too bright, reduce brightness while keeping it visible
+- [ ] Add typewriter live-writing animation to About section paragraphs (triggered on scroll)
+- [ ] Add animated effects to the 4 trait buttons (Mission-Driven, Full-Stack, Security-First, Data-Informed)

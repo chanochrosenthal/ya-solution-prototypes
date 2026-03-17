@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import DataParticles from "@/components/cyber/DataParticles";
 import GlitchText from "@/components/cyber/GlitchText";
 import TypeWriter from "@/components/cyber/TypeWriter";
+import ScrollTypeWriter from "@/components/cyber/ScrollTypeWriter";
 import ScrambleText from "@/components/cyber/ScrambleText";
 import SpotlightCard from "@/components/cyber/SpotlightCard";
 import RevealOnScroll from "@/components/cyber/RevealOnScroll";
@@ -138,12 +139,16 @@ export default function Home() {
               <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
                 Who We <span className="text-glow" style={{ color: "#22d3ee" }}>Are</span>
               </h2>
-              <p className="mt-6 text-lg leading-relaxed" style={{ color: "#94a3b8" }}>
-                Y&A Solution is a technology consulting firm specializing in AI-driven security, cloud infrastructure, and intelligent automation. We partner with organizations to design, deploy, and manage systems that are secure, scalable, and future-ready.
-              </p>
-              <p className="mt-4 text-lg leading-relaxed" style={{ color: "#94a3b8" }}>
-                Our team combines deep technical expertise with a consultative approach — understanding your business before writing a single line of code. From startups to enterprise, we deliver solutions that create measurable impact.
-              </p>
+              <div className="mt-6">
+                <ScrollTypeWriter
+                  texts={[
+                    "Y&A Solution is a technology consulting firm specializing in AI-driven security, cloud infrastructure, and intelligent automation. We partner with organizations to design, deploy, and manage systems that are secure, scalable, and future-ready.",
+                    "Our team combines deep technical expertise with a consultative approach — understanding your business before writing a single line of code. From startups to enterprise, we deliver solutions that create measurable impact."
+                  ]}
+                  speed={10}
+                  startDelay={400}
+                />
+              </div>
               <div className="mt-8 grid grid-cols-2 gap-4">
                 {[
                   { icon: Target, label: "Mission-Driven" },
@@ -153,10 +158,33 @@ export default function Home() {
                 ].map((item, i) => {
                   const Icon = item.icon;
                   return (
-                    <div key={i} className="flex items-center gap-3 py-3 px-4" style={{ border: "1px solid rgba(14,165,233,0.1)", background: "rgba(15,23,42,0.4)" }}>
-                      <Icon size={18} style={{ color: "#22d3ee" }} />
-                      <span className="text-sm font-medium text-white">{item.label}</span>
-                    </div>
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{ duration: 0.5, delay: 0.15 * i, ease: [0.22, 1, 0.36, 1] }}
+                      whileHover={{
+                        scale: 1.04,
+                        borderColor: "rgba(34,211,238,0.5)",
+                        boxShadow: "0 0 20px rgba(6,182,212,0.15), inset 0 0 20px rgba(6,182,212,0.05)",
+                      }}
+                      className="flex items-center gap-3 py-3 px-4 cursor-default group"
+                      style={{
+                        border: "1px solid rgba(14,165,233,0.1)",
+                        background: "rgba(15,23,42,0.4)",
+                        transition: "all 0.3s ease",
+                        clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                      }}
+                    >
+                      <motion.div
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                      >
+                        <Icon size={18} className="group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]" style={{ color: "#22d3ee", transition: "filter 0.3s" }} />
+                      </motion.div>
+                      <span className="text-sm font-medium text-white group-hover:text-[#22d3ee] transition-colors duration-300" style={{ ...mono }}>{item.label}</span>
+                    </motion.div>
                   );
                 })}
               </div>
