@@ -1,7 +1,7 @@
 /**
  * DESIGN: Cyberpunk Terminal Navbar
  * Numbered nav items (01_LUMANA_AI), clip-path CTA, glass background
- * Logo sized prominently, INIT_SYSTEM scrolls to #cta or navigates to /lumana-ai#cta
+ * Logo sized prominently, Get Started scrolls to #cta or navigates to /lumana-ai#cta
  */
 
 import { useState, useEffect } from "react";
@@ -11,10 +11,10 @@ import { motion, AnimatePresence } from "framer-motion";
 const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/YA_logo_bright_9d85f1ae.png";
 
 const navLinks = [
-  { href: "/lumana-ai", label: "01_LUMANA_AI" },
-  { href: "/lumana-ai#platform", label: "02_PLATFORM" },
-  { href: "/lumana-ai#capabilities", label: "03_CAPABILITIES" },
-  { href: "/lumana-ai#industries", label: "04_INDUSTRIES" },
+  { href: "/lumana-ai", label: "Lumana AI" },
+  { href: "/lumana-ai#platform", label: "Platform" },
+  { href: "/lumana-ai#capabilities", label: "Capabilities" },
+  { href: "/lumana-ai#industries", label: "Industries" },
 ];
 
 export default function Navbar() {
@@ -110,7 +110,7 @@ export default function Navbar() {
             className="btn-cyber-primary"
             style={{ padding: "10px 20px", fontSize: "12px" }}
           >
-            INIT_SYSTEM
+            Get Started
           </button>
         </div>
 
@@ -184,7 +184,7 @@ export default function Navbar() {
                   className="btn-cyber-primary w-full justify-center"
                   style={{ padding: "12px 20px", fontSize: "12px" }}
                 >
-                  INIT_SYSTEM
+                  Get Started
                 </button>
               </div>
             </div>

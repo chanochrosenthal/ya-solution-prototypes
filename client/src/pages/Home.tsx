@@ -109,7 +109,7 @@ export default function Home() {
                 Explore Lumana AI <ChevronRight size={16} />
               </Link>
               <a href="#about" className="btn-cyber-ghost">
-                ABOUT_US.exe
+                About Us
               </a>
             </motion.div>
           </div>
@@ -135,7 +135,7 @@ export default function Home() {
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <RevealOnScroll direction="left">
-              <SysLabel text="SYS.ABOUT" />
+              <SysLabel text="ABOUT US" />
               <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
                 Who We <span className="text-glow" style={{ color: "#22d3ee" }}>Are</span>
               </h2>
@@ -209,7 +209,7 @@ export default function Home() {
         <div className="grid-pattern absolute inset-0" style={{ opacity: 0.5 }} />
         <div className="container relative z-10">
           <RevealOnScroll className="text-center mb-16">
-            <SysLabel text="SYS.SOLUTIONS" />
+            <SysLabel text="OUR SERVICES" />
             <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Solutions Built for <span className="text-glow" style={{ color: "#22d3ee" }}>Scale</span>
             </h2>
@@ -235,7 +235,7 @@ export default function Home() {
                   <p className="text-sm leading-relaxed flex-1" style={{ color: "#94a3b8" }}>{item.desc}</p>
                   <div className="flex items-center gap-2 mt-6"
                     style={{ ...mono, fontSize: "12px", fontWeight: 600, textTransform: "uppercase", color: item.link ? "#22d3ee" : "#475569" }}>
-                    {item.link ? <>Load Module <ChevronRight size={14} /></> : <>Coming Soon</>}
+                    {item.link ? <>Learn More <ChevronRight size={14} /></> : <>Coming Soon</>}
                   </div>
                 </SpotlightCard>
               );
@@ -256,7 +256,7 @@ export default function Home() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 20% 60%, rgba(6,182,212,0.06), transparent 60%)" }} />
         <div className="container relative z-10">
           <RevealOnScroll className="text-center mb-16">
-            <SysLabel text="SYS.ADVANTAGES" />
+            <SysLabel text="WHY CHOOSE US" />
             <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Why <span className="text-glow" style={{ color: "#22d3ee" }}>Y&A Solution</span>
             </h2>
@@ -316,7 +316,7 @@ export default function Home() {
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <RevealOnScroll direction="left">
-              <SysLabel text="SYS.FEATURED_SOLUTION" />
+              <SysLabel text="FEATURED SOLUTION" />
               <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
                 Lumana AI<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Video Intelligence</span>
               </h2>
@@ -374,7 +374,7 @@ export default function Home() {
       <section className="py-28 relative">
         <div className="container relative z-10">
           <RevealOnScroll className="text-center mb-16">
-            <SysLabel text="SYS.CLIENT_FEEDBACK" />
+            <SysLabel text="CLIENT TESTIMONIALS" />
             <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Trusted by <span className="text-glow" style={{ color: "#22d3ee" }}>Industry Leaders</span>
             </h2>
@@ -431,7 +431,7 @@ export default function Home() {
         <RadarSweep />
         <div className="container relative z-10">
           <RevealOnScroll>
-            <SysLabel text="SYS.INITIALIZE" />
+            <SysLabel text="GET STARTED" />
             <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Ready to Transform<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Your Infrastructure?</span>
             </h2>
@@ -444,7 +444,7 @@ export default function Home() {
                 className="btn-cyber-primary"
                 style={{ padding: "14px 32px", fontSize: "13px" }}
               >
-                Init_Consultation.exe <ChevronRight size={16} />
+                Schedule Consultation <ChevronRight size={16} />
               </a>
               <Link href="/lumana-ai" className="btn-cyber-ghost">
                 Explore Lumana AI

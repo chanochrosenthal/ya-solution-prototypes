@@ -158,8 +158,8 @@ export default function LumanaAI() {
             {/* Buttons */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
               className="mt-10 flex flex-wrap gap-4">
-              <a href="#cta" className="btn-cyber-primary">Initialize Demo <ChevronRight size={16} /></a>
-              <button className="btn-cyber-ghost">RUN_OVERVIEW.exe</button>
+              <a href="#cta" className="btn-cyber-primary">Request a Demo <ChevronRight size={16} /></a>
+              <a href="#platform" className="btn-cyber-ghost">Platform Overview</a>
             </motion.div>
           </div>
 
@@ -180,7 +180,7 @@ export default function LumanaAI() {
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <RevealOnScroll direction="left">
-              <SysLabel text="SYS.CORE_TECHNOLOGY" />
+              <SysLabel text="CORE TECHNOLOGY" />
               <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
                 VIA-1 <span className="text-glow" style={{ color: "#22d3ee" }}>Intelligence Agent</span>
               </h2>
@@ -222,7 +222,7 @@ export default function LumanaAI() {
         <div className="grid-pattern absolute inset-0" style={{ opacity: 0.5 }} />
         <div className="container relative z-10">
           <RevealOnScroll className="text-center mb-20">
-            <SysLabel text="SYS.ARCHITECTURE" />
+            <SysLabel text="PLATFORM ARCHITECTURE" />
             <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Four Pillars of <span className="text-glow" style={{ color: "#22d3ee" }}>Intelligence</span>
             </h2>
@@ -259,7 +259,7 @@ export default function LumanaAI() {
       <section className="py-32 relative" id="capabilities">
         <div className="container">
           <RevealOnScroll className="text-center mb-20">
-            <SysLabel text="SYS.CAPABILITIES" />
+            <SysLabel text="KEY CAPABILITIES" />
             <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               See. <span className="text-glow" style={{ color: "#22d3ee" }}>Understand.</span> Act.
             </h2>
@@ -318,7 +318,7 @@ export default function LumanaAI() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <RevealOnScroll direction="left">
-              <SysLabel text="SYS.SEARCH_PROTOCOL" />
+              <SysLabel text="AI-POWERED SEARCH" />
               <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
                 Find Anything.<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Instantly.</span>
               </h2>
@@ -358,7 +358,7 @@ export default function LumanaAI() {
       <section className="py-32 relative" id="detection">
         <div className="container">
           <RevealOnScroll className="text-center mb-16">
-            <SysLabel text="SYS.THREAT_DETECTION" />
+            <SysLabel text="THREAT DETECTION" />
             <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Intelligent Threat<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Detection Suite</span>
             </h2>
@@ -389,7 +389,7 @@ export default function LumanaAI() {
         </div>
         <div className="container relative z-10">
           <RevealOnScroll className="text-center mb-16">
-            <SysLabel text="SYS.DEPLOYMENT" />
+            <SysLabel text="INDUSTRIES SERVED" />
             <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Built for Every <span className="text-glow" style={{ color: "#22d3ee" }}>Sector</span>
             </h2>
@@ -408,7 +408,7 @@ export default function LumanaAI() {
                     <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>{ind.desc}</p>
                     <div className="flex items-center gap-2 mt-6 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
                       style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 600, textTransform: "uppercase", color: "#22d3ee" }}>
-                      Load Module <ChevronRight size={14} />
+                      Learn More <ChevronRight size={14} />
                     </div>
                   </div>
                 </RevealOnScroll>
@@ -423,7 +423,7 @@ export default function LumanaAI() {
         <div className="container">
           <RevealOnScroll className="text-center mb-12">
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
-              <ScrambleText text="SYS.SECURITY_PROTOCOL" />
+              <ScrambleText text="SECURITY & COMPLIANCE" />
             </div>
             <h2 className="mt-4" style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Enterprise-Grade <span className="text-glow" style={{ color: "#22d3ee" }}>Security</span>
@@ -457,7 +457,7 @@ export default function LumanaAI() {
         <RadarSweep />
         <div className="container relative z-10">
           <RevealOnScroll>
-            <SysLabel text="SYS.INITIALIZE" />
+            <SysLabel text="GET STARTED" />
             <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Upgrade Your Security<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Infrastructure Today</span>
             </h2>
@@ -466,7 +466,7 @@ export default function LumanaAI() {
             </p>
             <div className="mt-10">
               <a href="mailto:hello@yasolution.com" className="btn-cyber-primary" style={{ padding: "16px 36px" }}>
-                Init_Consultation.exe <ChevronRight size={16} />
+                Schedule a Demo <ChevronRight size={16} />
               </a>
             </div>
           </RevealOnScroll>

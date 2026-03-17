@@ -37,7 +37,7 @@ export default function Footer() {
             <div className="mt-4 flex items-center gap-2">
               <div style={{ width: "6px", height: "6px", background: "#22d3ee", boxShadow: "0 0 10px #22d3ee", animation: "pulse-glow 2s infinite" }} />
               <span style={{ ...mono, fontSize: "10px", letterSpacing: "0.15em", textTransform: "uppercase", color: "#06b6d4" }}>
-                SYS.ONLINE
+                Systems Online
               </span>
             </div>
           </div>
