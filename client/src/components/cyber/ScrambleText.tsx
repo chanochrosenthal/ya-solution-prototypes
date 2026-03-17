@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
-const CHARS = "!<>-_\\/[]{}—=+*^?#_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const CHARS = "!<>-_\\/[]{}—=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 interface ScrambleTextProps {
   text: string;
@@ -20,6 +20,61 @@ export default function ScrambleText({
   const ref = useRef<HTMLElement>(null);
   const [display, setDisplay] = useState(text);
   const hasAnimated = useRef(false);
+  const animFrameRef = useRef<number>(0);
+
+  const scramble = useCallback(() => {
+    const target = text;
+    const length = target.length;
+    const totalFrames = 40; // total animation frames
+    const revealOrder: number[] = [];
+
+    // Create a shuffled order for revealing characters
+    for (let i = 0; i < length; i++) revealOrder.push(i);
+    for (let i = revealOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [revealOrder[i], revealOrder[j]] = [revealOrder[j], revealOrder[i]];
+    }
+
+    // Each character gets a reveal frame
+    const revealAt = new Array(length).fill(0);
+    for (let i = 0; i < length; i++) {
+      const idx = revealOrder[i];
+      // Spread reveals across frames 10 to totalFrames
+      revealAt[idx] = Math.floor(10 + (i / length) * (totalFrames - 10));
+    }
+
+    let frame = 0;
+
+    function update() {
+      const chars: string[] = [];
+      let allDone = true;
+
+      for (let i = 0; i < length; i++) {
+        if (frame >= revealAt[i]) {
+          chars.push(target[i]);
+        } else {
+          allDone = false;
+          if (target[i] === " ") {
+            chars.push(" ");
+          } else {
+            chars.push(CHARS[Math.floor(Math.random() * CHARS.length)]);
+          }
+        }
+      }
+
+      setDisplay(chars.join(""));
+
+      if (!allDone && frame < totalFrames + 5) {
+        frame++;
+        animFrameRef.current = requestAnimationFrame(update);
+      } else {
+        // Always force the final correct text
+        setDisplay(target);
+      }
+    }
+
+    animFrameRef.current = requestAnimationFrame(update);
+  }, [text]);
 
   useEffect(() => {
     if (!triggerOnView) return;
@@ -35,48 +90,14 @@ export default function ScrambleText({
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
     observer.observe(el);
-    return () => observer.disconnect();
-  }, [triggerOnView, delay]);
-
-  function scramble() {
-    const target = text;
-    const length = target.length;
-    const queue: { from: string; to: string; start: number; end: number }[] = [];
-
-    for (let i = 0; i < length; i++) {
-      const start = Math.floor(Math.random() * 30);
-      const end = start + Math.floor(Math.random() * 30);
-      queue.push({ from: "", to: target[i], start, end });
-    }
-
-    let frame = 0;
-    function update() {
-      let output = "";
-      let complete = 0;
-      for (let i = 0; i < queue.length; i++) {
-        const { to, start, end } = queue[i];
-        if (frame >= end) {
-          complete++;
-          output += to;
-        } else if (frame >= start) {
-          output += CHARS[Math.floor(Math.random() * CHARS.length)];
-        } else {
-          output += "";
-        }
-      }
-      setDisplay(output);
-      if (complete < queue.length) {
-        frame++;
-        requestAnimationFrame(update);
-      } else {
-        setDisplay(target);
-      }
-    }
-    requestAnimationFrame(update);
-  }
+    return () => {
+      observer.disconnect();
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+  }, [triggerOnView, delay, scramble]);
 
   return (
     <Tag ref={ref as any} className={className}>

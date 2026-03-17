@@ -53,7 +53,7 @@ export default function Navbar() {
       <div className="container flex items-center justify-between h-16 md:h-[72px]">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Y&A Solution" className="h-8 w-auto" />
+          <img src={LOGO} alt="Y&A Solution" className="h-12 w-auto" />
         </Link>
 
         {/* Desktop links */}

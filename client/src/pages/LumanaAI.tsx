@@ -15,6 +15,8 @@ import {
   Cpu, Cloud, Monitor, Camera, ChevronRight,
 } from "lucide-react";
 
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import ScrambleText from "@/components/cyber/ScrambleText";
 import TypeWriter from "@/components/cyber/TypeWriter";
 import GlitchText from "@/components/cyber/GlitchText";
@@ -50,11 +52,13 @@ function StatBox({ end, suffix, label }: { end: number; suffix: string; label: s
 /* ── Section label ── */
 function SysLabel({ text }: { text: string }) {
   return (
-    <ScrambleText
-      text={text}
-      className="block mb-4"
-      as="div"
-    />
+    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
+      <ScrambleText
+        text={text}
+        className="block mb-4"
+        as="div"
+      />
+    </div>
   );
 }
 
@@ -103,6 +107,7 @@ export default function LumanaAI() {
 
   return (
     <div className="min-h-screen" style={{ background: "#020617" }}>
+      <Navbar />
       {/* Scanlines */}
       <div className="scanlines" />
 
@@ -175,9 +180,7 @@ export default function LumanaAI() {
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <RevealOnScroll direction="left">
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4", marginBottom: "16px" }}>
-                <SysLabel text="SYS.CORE_TECHNOLOGY" />
-              </div>
+              <SysLabel text="SYS.CORE_TECHNOLOGY" />
               <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
                 VIA-1 <span className="text-glow" style={{ color: "#22d3ee" }}>Intelligence Agent</span>
               </h2>
@@ -219,9 +222,7 @@ export default function LumanaAI() {
         <div className="grid-pattern absolute inset-0" style={{ opacity: 0.5 }} />
         <div className="container relative z-10">
           <RevealOnScroll className="text-center mb-20">
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
-              <SysLabel text="SYS.ARCHITECTURE" />
-            </div>
+            <SysLabel text="SYS.ARCHITECTURE" />
             <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Four Pillars of <span className="text-glow" style={{ color: "#22d3ee" }}>Intelligence</span>
             </h2>
@@ -258,9 +259,7 @@ export default function LumanaAI() {
       <section className="py-32 relative" id="capabilities">
         <div className="container">
           <RevealOnScroll className="text-center mb-20">
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
-              <SysLabel text="SYS.CAPABILITIES" />
-            </div>
+            <SysLabel text="SYS.CAPABILITIES" />
             <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               See. <span className="text-glow" style={{ color: "#22d3ee" }}>Understand.</span> Act.
             </h2>
@@ -319,9 +318,7 @@ export default function LumanaAI() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <RevealOnScroll direction="left">
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4", marginBottom: "16px" }}>
-                <SysLabel text="SYS.SEARCH_PROTOCOL" />
-              </div>
+              <SysLabel text="SYS.SEARCH_PROTOCOL" />
               <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
                 Find Anything.<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Instantly.</span>
               </h2>
@@ -361,9 +358,7 @@ export default function LumanaAI() {
       <section className="py-32 relative" id="detection">
         <div className="container">
           <RevealOnScroll className="text-center mb-16">
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
-              <SysLabel text="SYS.THREAT_DETECTION" />
-            </div>
+            <SysLabel text="SYS.THREAT_DETECTION" />
             <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Intelligent Threat<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Detection Suite</span>
             </h2>
@@ -394,9 +389,7 @@ export default function LumanaAI() {
         </div>
         <div className="container relative z-10">
           <RevealOnScroll className="text-center mb-16">
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
-              <SysLabel text="SYS.DEPLOYMENT" />
-            </div>
+            <SysLabel text="SYS.DEPLOYMENT" />
             <h2 className="mt-4" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Built for Every <span className="text-glow" style={{ color: "#22d3ee" }}>Sector</span>
             </h2>
@@ -426,8 +419,16 @@ export default function LumanaAI() {
       </section>
 
       {/* ═══ SECURITY ═══ */}
-      <section className="py-32 relative">
+      <section className="py-20 relative">
         <div className="container">
+          <RevealOnScroll className="text-center mb-12">
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4" }}>
+              <ScrambleText text="SYS.SECURITY_PROTOCOL" />
+            </div>
+            <h2 className="mt-4" style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
+              Enterprise-Grade <span className="text-glow" style={{ color: "#22d3ee" }}>Security</span>
+            </h2>
+          </RevealOnScroll>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { icon: Lock, title: "Zero-Trust Framework", desc: "Every internal/external request is cryptographically verified and validated. No implicit trust zones." },
@@ -437,7 +438,7 @@ export default function LumanaAI() {
               const Icon = t.icon;
               return (
                 <RevealOnScroll key={i} delay={i * 0.1}>
-                  <div className="p-8 text-center h-full" style={{ border: "1px dashed rgba(14,165,233,0.15)", background: "rgba(15,23,42,0.2)" }}>
+                  <div className="p-8 text-center h-full" style={{ border: "1px dashed rgba(14,165,233,0.2)", background: "rgba(2,6,23,0.8)", backdropFilter: "blur(10px)" }}>
                     <Icon size={32} className="mx-auto mb-6" style={{ color: "#22d3ee" }} />
                     <h3 className="text-lg font-semibold text-white mb-3">{t.title}</h3>
                     <p className="text-sm" style={{ color: "#94a3b8" }}>{t.desc}</p>
@@ -456,9 +457,7 @@ export default function LumanaAI() {
         <RadarSweep />
         <div className="container relative z-10">
           <RevealOnScroll>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#06b6d4", marginBottom: "24px" }}>
-              <SysLabel text="SYS.INITIALIZE" />
-            </div>
+            <SysLabel text="SYS.INITIALIZE" />
             <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Upgrade Your Security<br /><span className="text-glow" style={{ color: "#22d3ee" }}>Infrastructure Today</span>
             </h2>
@@ -473,6 +472,8 @@ export default function LumanaAI() {
           </RevealOnScroll>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

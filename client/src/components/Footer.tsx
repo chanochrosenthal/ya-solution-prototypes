@@ -29,7 +29,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="md:col-span-1">
-            <img src={LOGO} alt="Y&A Solution" className="h-9 w-auto mb-5" />
+            <img src={LOGO} alt="Y&A Solution" className="h-14 w-auto mb-5" />
             <p className="text-sm leading-relaxed" style={{ color: "#475569" }}>
               Engineering precision. Delivering excellence. Your trusted technology partner.
             </p>
