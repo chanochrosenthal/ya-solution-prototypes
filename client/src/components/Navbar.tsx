@@ -68,10 +68,21 @@ export default function Navbar() {
       }}
     >
       <div className="container flex items-center justify-between h-20 md:h-24">
-        {/* Logo — prominently sized */}
-        <Link href="/" className="flex items-center gap-3">
+        {/* Logo — click scrolls to top, or navigates home */}
+        <button
+          onClick={() => {
+            if (location === "/") {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+              navigate("/");
+              setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+            }
+          }}
+          className="flex items-center gap-3"
+          aria-label="Back to top"
+        >
           <img src={LOGO} alt="Y&A Solution" className="h-14 md:h-16 w-auto" />
-        </Link>
+        </button>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-1">
