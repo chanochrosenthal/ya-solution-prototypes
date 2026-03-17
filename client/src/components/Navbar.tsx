@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 
-const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/YA_concept1_geometric_monogram_21251de9.png";
+const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/YA_logo_bright_9d85f1ae.png";
 
 const navLinks = [
   { href: "/lumana-ai", label: "01_LUMANA_AI" },

@@ -26,7 +26,7 @@ export const brands: BrandVariant[] = [
     id: "geometric-monogram",
     name: "Concept 1 — Geometric Monogram",
     subtitle: "Angular Y&A fusion with navy-to-blue gradient",
-    logo: "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/YA_concept1_geometric_monogram_74b3f5d7.png",
+    logo: "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/YA_logo_bright_9d85f1ae.png",
     hero: "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/hero_abstract_tech_1-fc5NgbL3mfjefqeyppZkPT.webp",
     accent: "#2563EB",
     accentLight: "#DBEAFE",

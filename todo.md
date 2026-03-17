@@ -1,4 +1,4 @@
 # Current Tasks
 
-- [ ] Set Y&A logo as favicon (convert PNG to ICO, place in client/public/)
-- [ ] Make navbar logo click scroll to top of page instead of navigating to "/"
+- [ ] Fix favicon - currently shows garbled "Y&" text, needs to show the YA symbol mark clearly
+- [ ] Fix navbar logo - too dark (navy/dark blue) against dark background, needs a brighter/white version for dark theme

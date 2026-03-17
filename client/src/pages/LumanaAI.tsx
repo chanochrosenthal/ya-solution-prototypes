@@ -27,7 +27,7 @@ import RadarSweep from "@/components/cyber/RadarSweep";
 import RevealOnScroll from "@/components/cyber/RevealOnScroll";
 import { useCountUp } from "@/hooks/useCountUp";
 
-const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/YA_concept1_geometric_monogram_21251de9.png";
+const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/YA_logo_bright_9d85f1ae.png";
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_hero_command_center-Cv2ArTrtGKeGMoxxSuEXKV.webp";
 const AI_VISION = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_ai_vision-2W7KCNMV8C27wNi6kNqyxt.webp";
 const DASHBOARD = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/lumana_platform_dashboard-jgN3WMHXA8XTzZLRQgviPu.webp";
