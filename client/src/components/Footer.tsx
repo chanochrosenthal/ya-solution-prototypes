@@ -1,13 +1,14 @@
 /**
  * DESIGN: Cyberpunk Terminal Footer
  * Terminal-style links (> prefix), JetBrains Mono, dashed borders
+ * "Built by NexFlow AI Automation" branding at the very bottom
  */
 
 import { Link } from "wouter";
 
 const LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/95509065/A6VaLmJCJgb2gb6sz7viix/YA_concept1_geometric_monogram_21251de9.png";
 
-const mono = { fontFamily: "'JetBrains Mono', monospace" };
+const mono: React.CSSProperties = { fontFamily: "'JetBrains Mono', monospace" };
 
 function FooterLink({ label, href }: { label: string; href?: string }) {
   const inner = (
@@ -62,7 +63,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li><FooterLink label="About" /></li>
               <li><FooterLink label="Careers" /></li>
-              <li><FooterLink label="Comm_Logs" /></li>
+              <li><FooterLink label="Blog" /></li>
               <li><FooterLink label="Contact" /></li>
             </ul>
           </div>
@@ -75,21 +76,65 @@ export default function Footer() {
             <ul className="space-y-3">
               <li><FooterLink label="LinkedIn" /></li>
               <li><FooterLink label="GitHub" /></li>
-              <li><FooterLink label="Terminal_X" /></li>
+              <li><FooterLink label="Twitter/X" /></li>
               <li><FooterLink label="hello@yasolution.com" /></li>
             </ul>
           </div>
         </div>
 
+        {/* Copyright row */}
         <div className="mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
           style={{ borderTop: "1px dashed rgba(14,165,233,0.1)" }}>
           <p style={{ ...mono, fontSize: "11px", color: "#334155" }}>
-            &copy; 2026 Y&A Solution. All rights reserved. // BUILD_v1.0
+            &copy; 2026 Y&A Solution. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <span className="cursor-pointer transition-colors hover:text-[#22d3ee]" style={{ ...mono, fontSize: "11px", color: "#334155" }}>PRIVACY_POLICY</span>
             <span className="cursor-pointer transition-colors hover:text-[#22d3ee]" style={{ ...mono, fontSize: "11px", color: "#334155" }}>TERMS_OF_SERVICE</span>
           </div>
+        </div>
+
+        {/* NexFlow AI Automation branding */}
+        <div className="mt-8 pt-6 flex flex-col items-center gap-2"
+          style={{ borderTop: "1px solid rgba(14,165,233,0.05)" }}>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <div style={{ width: "4px", height: "4px", background: "#8b5cf6", boxShadow: "0 0 8px #8b5cf6" }} />
+              <div style={{ width: "4px", height: "4px", background: "#a78bfa", boxShadow: "0 0 8px #a78bfa" }} />
+              <div style={{ width: "4px", height: "4px", background: "#c4b5fd", boxShadow: "0 0 8px #c4b5fd" }} />
+            </div>
+            <span style={{ ...mono, fontSize: "10px", letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b" }}>
+              Built by
+            </span>
+            <a
+              href="https://nexflow.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-all duration-300 hover:opacity-100"
+              style={{ opacity: 0.8 }}
+            >
+              <span style={{
+                ...mono,
+                fontSize: "11px",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                background: "linear-gradient(135deg, #8b5cf6, #06b6d4)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}>
+                NEXFLOW AI AUTOMATION
+              </span>
+            </a>
+            <div className="flex items-center gap-1.5">
+              <div style={{ width: "4px", height: "4px", background: "#c4b5fd", boxShadow: "0 0 8px #c4b5fd" }} />
+              <div style={{ width: "4px", height: "4px", background: "#a78bfa", boxShadow: "0 0 8px #a78bfa" }} />
+              <div style={{ width: "4px", height: "4px", background: "#8b5cf6", boxShadow: "0 0 8px #8b5cf6" }} />
+            </div>
+          </div>
+          <p style={{ ...mono, fontSize: "9px", letterSpacing: "0.1em", color: "#1e293b" }}>
+            AI-POWERED AUTOMATION SOLUTIONS FOR SMBS
+          </p>
         </div>
       </div>
     </footer>

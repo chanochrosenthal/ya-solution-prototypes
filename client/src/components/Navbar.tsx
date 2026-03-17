@@ -1,6 +1,7 @@
 /**
  * DESIGN: Cyberpunk Terminal Navbar
  * Numbered nav items (01_LUMANA_AI), clip-path CTA, glass background
+ * Logo sized prominently, INIT_SYSTEM scrolls to #cta or navigates to /lumana-ai#cta
  */
 
 import { useState, useEffect } from "react";
@@ -19,7 +20,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -38,6 +39,22 @@ export default function Navbar() {
     }
   };
 
+  const handleInitSystem = () => {
+    setMobileOpen(false);
+    // If on home page, scroll to contact section; otherwise navigate to contact section
+    const ctaEl = document.getElementById("cta");
+    if (ctaEl) {
+      ctaEl.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Navigate to lumana-ai page which has the CTA
+      navigate("/lumana-ai");
+      setTimeout(() => {
+        const el = document.getElementById("cta");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 500);
+    }
+  };
+
   return (
     <motion.nav
       initial={{ y: -80 }}
@@ -50,10 +67,10 @@ export default function Navbar() {
         borderBottom: scrolled ? "1px solid rgba(14,165,233,0.1)" : "1px solid transparent",
       }}
     >
-      <div className="container flex items-center justify-between h-16 md:h-[72px]">
-        {/* Logo */}
+      <div className="container flex items-center justify-between h-20 md:h-24">
+        {/* Logo — prominently sized */}
         <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Y&A Solution" className="h-12 w-auto" />
+          <img src={LOGO} alt="Y&A Solution" className="h-14 md:h-16 w-auto" />
         </Link>
 
         {/* Desktop links */}
@@ -75,16 +92,15 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* CTA — functional: scrolls to contact/CTA */}
         <div className="hidden md:block">
-          <a
-            href="#cta"
-            onClick={() => handleAnchorClick("#cta")}
+          <button
+            onClick={handleInitSystem}
             className="btn-cyber-primary"
             style={{ padding: "10px 20px", fontSize: "12px" }}
           >
             INIT_SYSTEM
-          </a>
+          </button>
         </div>
 
         {/* Mobile toggle */}
@@ -152,14 +168,13 @@ export default function Navbar() {
                 </motion.div>
               ))}
               <div className="mt-4 px-4">
-                <a
-                  href="#cta"
-                  onClick={() => handleAnchorClick("#cta")}
+                <button
+                  onClick={handleInitSystem}
                   className="btn-cyber-primary w-full justify-center"
                   style={{ padding: "12px 20px", fontSize: "12px" }}
                 >
                   INIT_SYSTEM
-                </a>
+                </button>
               </div>
             </div>
           </motion.div>
