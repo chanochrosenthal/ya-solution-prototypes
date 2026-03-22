@@ -107,9 +107,7 @@ export default function Footer() {
               Built by
             </span>
             <a
-              href="https://nexflow.ai"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="mailto:nexflowaiautomations@gmail.com"
               className="transition-all duration-300 hover:opacity-100"
               style={{ opacity: 0.8 }}
             >
