@@ -81,7 +81,7 @@ export default function Navbar() {
           className="flex items-center gap-3"
           aria-label="Back to top"
         >
-          <img src={LOGO} alt="Y&A Solution" className="h-14 md:h-16 w-auto" />
+          <img src={LOGO} alt="Y&A Solutions" className="h-14 md:h-16 w-auto" />
         </button>
 
         {/* Desktop links */}

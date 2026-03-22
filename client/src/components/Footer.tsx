@@ -30,7 +30,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="md:col-span-1">
-            <img src={LOGO} alt="Y&A Solution" className="h-14 w-auto mb-5" />
+            <img src={LOGO} alt="Y&A Solutions" className="h-14 w-auto mb-5" />
             <p className="text-sm leading-relaxed" style={{ color: "#475569" }}>
               Engineering precision. Delivering excellence. Your trusted technology partner.
             </p>
@@ -86,7 +86,7 @@ export default function Footer() {
         <div className="mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
           style={{ borderTop: "1px dashed rgba(14,165,233,0.1)" }}>
           <p style={{ ...mono, fontSize: "11px", color: "#334155" }}>
-            &copy; 2026 Y&A Solution. All rights reserved.
+            &copy; 2026 Y&A Solutions. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <span className="cursor-pointer transition-colors hover:text-[#22d3ee]" style={{ ...mono, fontSize: "11px", color: "#334155" }}>PRIVACY_POLICY</span>

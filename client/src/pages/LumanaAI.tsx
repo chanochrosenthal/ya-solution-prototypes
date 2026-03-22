@@ -134,7 +134,7 @@ export default function LumanaAI() {
               className="inline-flex items-center gap-3 mb-8"
               style={{ padding: "6px 16px", border: "1px solid rgba(14,165,233,0.3)", background: "rgba(6,182,212,0.05)", backdropFilter: "blur(10px)", clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)" }}>
               <div style={{ width: "6px", height: "6px", background: "#22d3ee", boxShadow: "0 0 10px #22d3ee", animation: "pulse-glow 2s infinite" }} />
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#06b6d4" }}>Powered by Y&A Solution</span>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#06b6d4" }}>Powered by Y&A Solutions</span>
             </motion.div>
 
             {/* Title */}

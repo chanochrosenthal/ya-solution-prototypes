@@ -142,7 +142,7 @@ export default function Home() {
               <div className="mt-6">
                 <ScrollTypeWriter
                   texts={[
-                    "Y&A Solution is a technology consulting firm specializing in AI-driven security, cloud infrastructure, and intelligent automation. We partner with organizations to design, deploy, and manage systems that are secure, scalable, and future-ready.",
+                    "Y&A Solutions is a technology consulting firm specializing in AI-driven security, cloud infrastructure, and intelligent automation. We partner with organizations to design, deploy, and manage systems that are secure, scalable, and future-ready.",
                     "Our team combines deep technical expertise with a consultative approach — understanding your business before writing a single line of code. From startups to enterprise, we deliver solutions that create measurable impact."
                   ]}
                   speed={10}
@@ -194,7 +194,7 @@ export default function Home() {
               <div className="img-tech-container glow-cyan">
                 <div className="img-tech-inner">
                   <ScannerLine />
-                  <img src={DASHBOARD} alt="Y&A Solution Platform" />
+                  <img src={DASHBOARD} alt="Y&A Solutions Platform" />
                 </div>
               </div>
             </RevealOnScroll>
@@ -258,7 +258,7 @@ export default function Home() {
           <RevealOnScroll className="text-center mb-16">
             <SysLabel text="WHY CHOOSE US" />
             <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
-              Why <span className="text-glow" style={{ color: "#22d3ee" }}>Y&A Solution</span>
+              Why <span className="text-glow" style={{ color: "#22d3ee" }}>Y&A Solutions</span>
             </h2>
           </RevealOnScroll>
 
@@ -383,7 +383,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                quote: "Y&A Solution transformed our entire security infrastructure. The Lumana AI deployment reduced our false alarm rate by 90% and gave us capabilities we didn't know were possible.",
+                quote: "Y&A Solutions transformed our entire security infrastructure. The Lumana AI deployment reduced our false alarm rate by 90% and gave us capabilities we didn't know were possible.",
                 name: "David K.",
                 role: "CTO, SecureVault Inc.",
                 stars: 5,
