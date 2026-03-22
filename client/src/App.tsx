@@ -9,10 +9,16 @@ import CyberCursor from "./components/cyber/CyberCursor";
 import Home from "./pages/Home";
 import LumanaAI from "./pages/LumanaAI";
 
+const PAGE_TITLES: Record<string, string> = {
+  "/": "Y&A Solutions | AI & Security Technology",
+  "/lumana-ai": "Lumana AI | Intelligent Video Security — Y&A Solutions",
+};
+
 function ScrollToTop() {
   const [location] = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = PAGE_TITLES[location] ?? "Y&A Solutions | AI & Security Technology";
   }, [location]);
   return null;
 }
